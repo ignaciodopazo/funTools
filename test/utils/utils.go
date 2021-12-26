@@ -12,8 +12,9 @@ func ExpectedResult[T comparable](t testing.TB, got, want T) {
 }
 
 func ExpectedResultSlices[T comparable](t testing.TB, got, want []T) {
+	t.Helper()
 	if len(got) != len(want) {
-		t.Error(got, "and", want, "has different length")
+		t.Error(got, "and", want, "have different length")
 	}
 	for i := range got {
 		ExpectedResult(t, got[i], want[i])
@@ -21,6 +22,7 @@ func ExpectedResultSlices[T comparable](t testing.TB, got, want []T) {
 }
 
 func CheckPredicateOverSlice[T comparable](t testing.TB, p func(T) bool, got []T) {
+	t.Helper()
 	for _, v := range got {
 		if !p(v) {
 			t.Error(got, "doesn't comply the predicate")
