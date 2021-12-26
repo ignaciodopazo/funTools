@@ -36,3 +36,17 @@ func Fold[T comparable](f func(T, T) T, init T, container []T) T {
 	}
 	return res
 }
+
+func Zip[T comparable, U comparable](t []T, u []U) []Pair[T, U] {
+	if len(t) == len(u) {
+		res := []Pair[T, U] {}
+		for i, v := range t {
+			res = append(res, Pair[T, U] {v, u[i]})
+		}
+		return res
+	} else if len(t) < len(u) {
+		return Zip(t, u[:len(t)])
+	} else {
+		return Zip(t[:len(u)], u)
+	}
+}
