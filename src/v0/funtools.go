@@ -50,3 +50,15 @@ func Zip[T comparable, U comparable](t []T, u []U) []Pair[T, U] {
 		return Zip(t[:len(u)], u)
 	}
 }
+
+func Partition[T comparable](p func (T) bool, container []T) ([]T, []T) {
+	yes, no := []T {}, []T {}
+	for _, v := range container {
+		if p(v) {
+			yes = append(yes, v)
+		} else {
+			no = append(no, v)
+		}
+	}
+	return yes, no
+}
