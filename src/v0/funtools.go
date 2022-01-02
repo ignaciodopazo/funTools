@@ -2,7 +2,7 @@ package funTools
 
 // Filters the input slice with the given predicate, returning
 // a new slice with the elements that satisfy it.
-func Filter[T comparable](p func(T) bool, container []T) []T {
+func Filter[T any](p func(T) bool, container []T) []T {
 	var res []T
 	for _, v := range container {
 		if p(v) {
@@ -14,7 +14,7 @@ func Filter[T comparable](p func(T) bool, container []T) []T {
 
 // Returns a new slice where its elements are the results of applying
 // the given function to every element of the input slice.
-func Fmap[S comparable, T comparable](f func(S) T, container []S) []T {
+func Fmap[S any, T any](f func(S) T, container []S) []T {
 	// I know the result's size before computation, use that for efficiency?
 	// one go routine for each result's elem in the resulting container?
 	var res []T
@@ -29,7 +29,7 @@ func Fmap[S comparable, T comparable](f func(S) T, container []S) []T {
 // function along with the second element of the slice, and so on.
 // Returns the result of the last application of the binary function, or
 // the given init when the container is empty.
-func Fold[T comparable](f func(T, T) T, init T, container []T) T {
+func Fold[T any](f func(T, T) T, init T, container []T) T {
 	res := init
 	for _, v := range container {
 		res = f(res, v)
@@ -37,7 +37,7 @@ func Fold[T comparable](f func(T, T) T, init T, container []T) T {
 	return res
 }
 
-func Zip[T comparable, U comparable](t []T, u []U) []Pair[T, U] {
+func Zip[T any, U any](t []T, u []U) []Pair[T, U] {
 	if len(t) == len(u) {
 		res := []Pair[T, U] {}
 		for i, v := range t {
@@ -51,7 +51,7 @@ func Zip[T comparable, U comparable](t []T, u []U) []Pair[T, U] {
 	}
 }
 
-func Partition[T comparable](p func (T) bool, container []T) ([]T, []T) {
+func Partition[T any](p func (T) bool, container []T) ([]T, []T) {
 	yes, no := []T {}, []T {}
 	for _, v := range container {
 		if p(v) {
